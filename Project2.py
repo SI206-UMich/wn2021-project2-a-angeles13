@@ -41,8 +41,15 @@ def get_search_links():
     “https://www.goodreads.com/book/show/kdkd".
 
     """
-
-    pass
+    url = "https://www.goodreads.com/search?q=fantasy&qid=NwUsLiA2Nc"
+    resp = requests.get(url)
+    soup = BeautifulSoup(resp.content, 'html.parser')
+    links =[]
+    for book in soup.find_all('a', class_='bookTitle', itemprop='url', limit = 10):
+        links.append('https://www.goodreads.com'+book.get('href'))
+    for link in links: 
+        print(link)
+    return links
 
 
 def get_book_summary(book_url):
@@ -111,7 +118,7 @@ def extra_credit(filepath):
 class TestCases(unittest.TestCase):
 
     # call get_search_links() and save it to a static variable: search_urls
-
+    search_urls = get_search_links()
 
     def test_get_titles_from_search_results(self):
         # call get_titles_from_search_results() on search_results.htm and save to a local variable
@@ -130,14 +137,24 @@ class TestCases(unittest.TestCase):
 
     def test_get_search_links(self):
         # check that TestCases.search_urls is a list
-
+        self.assertEqual(type(self.search_urls), list)
         # check that the length of TestCases.search_urls is correct (10 URLs)
-
-
+        self.assertEqual(len(self.search_urls), 10)
         # check that each URL in the TestCases.search_urls is a string
+        for entry in self.search_urls: 
+            self.assertEqual(type(entry), str)
         # check that each URL contains the correct url for Goodreads.com followed by /book/show/
-
-        pass
+        self.assertEqual(self.search_urls, 
+        ['https://www.goodreads.com/book/show/84136.Fantasy_Lover?from_search=true&from_srp=true&qid=NwUsLiA2Nc&rank=1',
+        'https://www.goodreads.com/book/show/6542645-fantasy-in-death?from_search=true&from_srp=true&qid=NwUsLiA2Nc&rank=2',
+        'https://www.goodreads.com/book/show/35082746-fantasy-of-frost?from_search=true&from_srp=true&qid=NwUsLiA2Nc&rank=3',
+        'https://www.goodreads.com/book/show/2081.The_Mind_s_I?from_search=true&from_srp=true&qid=NwUsLiA2Nc&rank=4',
+        'https://www.goodreads.com/book/show/13600356-epic?from_search=true&from_srp=true&qid=NwUsLiA2Nc&rank=5',
+        'https://www.goodreads.com/book/show/25255723-gods-and-mortals?from_search=true&from_srp=true&qid=NwUsLiA2Nc&rank=6',
+        'https://www.goodreads.com/book/show/6931452-the-kingdom-of-fantasy?from_search=true&from_srp=true&qid=NwUsLiA2Nc&rank=7',
+        'https://www.goodreads.com/book/show/31363.How_to_Write_Science_Fiction_Fantasy?from_search=true&from_srp=true&qid=NwUsLiA2Nc&rank=8',
+        'https://www.goodreads.com/book/show/47530.Mapping_the_World_of_Harry_Potter?from_search=true&from_srp=true&qid=NwUsLiA2Nc&rank=9',
+        'https://www.goodreads.com/book/show/42667807-die-vol-1?from_search=true&from_srp=true&qid=NwUsLiA2Nc&rank=10'])
 
     def test_get_book_summary(self):
         # create a local variable – summaries – a list containing the results from get_book_summary()
