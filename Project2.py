@@ -162,17 +162,9 @@ class TestCases(unittest.TestCase):
         for entry in self.search_urls: 
             self.assertEqual(type(entry), str)
         # check that each URL contains the correct url for Goodreads.com followed by /book/show/
-        self.assertEqual(self.search_urls, 
-        ['https://www.goodreads.com/book/show/84136.Fantasy_Lover?from_search=true&from_srp=true&qid=NwUsLiA2Nc&rank=1',
-        'https://www.goodreads.com/book/show/6542645-fantasy-in-death?from_search=true&from_srp=true&qid=NwUsLiA2Nc&rank=2',
-        'https://www.goodreads.com/book/show/35082746-fantasy-of-frost?from_search=true&from_srp=true&qid=NwUsLiA2Nc&rank=3',
-        'https://www.goodreads.com/book/show/2081.The_Mind_s_I?from_search=true&from_srp=true&qid=NwUsLiA2Nc&rank=4',
-        'https://www.goodreads.com/book/show/13600356-epic?from_search=true&from_srp=true&qid=NwUsLiA2Nc&rank=5',
-        'https://www.goodreads.com/book/show/25255723-gods-and-mortals?from_search=true&from_srp=true&qid=NwUsLiA2Nc&rank=6',
-        'https://www.goodreads.com/book/show/6931452-the-kingdom-of-fantasy?from_search=true&from_srp=true&qid=NwUsLiA2Nc&rank=7',
-        'https://www.goodreads.com/book/show/31363.How_to_Write_Science_Fiction_Fantasy?from_search=true&from_srp=true&qid=NwUsLiA2Nc&rank=8',
-        'https://www.goodreads.com/book/show/47530.Mapping_the_World_of_Harry_Potter?from_search=true&from_srp=true&qid=NwUsLiA2Nc&rank=9',
-        'https://www.goodreads.com/book/show/42667807-die-vol-1?from_search=true&from_srp=true&qid=NwUsLiA2Nc&rank=10'])
+        
+        for entry in self.search_urls: 
+            self.assertTrue(entry.startswith('https://www.goodreads.com/book/show/'))
 
     def test_get_book_summary(self):
         # create a local variable – summaries – a list containing the results from get_book_summary()
